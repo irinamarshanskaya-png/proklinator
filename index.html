@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0908">
+<title>ПРОКЛИНАТОР 🔮</title>
+<meta name="description" content="Ваш персональный генератор проклятий. Когда просто «ну и ладно» недостаточно.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;700;800&family=Playfair+Display:ital,wght@0,500;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0908;
+  --bg-2:#120f10;
+  --ink:#f2ebe3;
+  --muted:#968b84;
+  --gold:#d9b872;
+  --gold-dim:#8d7442;
+  --wine:#6d1230;
+  --wine-soft:#a11c45;
+  --violet:#3b1c5e;
+  --glass:rgba(255,255,255,.045);
+  --glass-brd:rgba(255,255,255,.09);
+  --radius:22px;
+  --shadow:0 24px 60px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+  min-height:100dvh;
+  overflow-x:hidden;
+  position:relative;
+  -webkit-font-smoothing:antialiased;
+}
+/* ---------- фон: дым и медленное движение ---------- */
+.bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:
+  radial-gradient(120% 80% at 50% -10%, #1a1016 0%, var(--bg) 55%),
+  linear-gradient(180deg,var(--bg) 0%, var(--bg-2) 100%);}
+.smoke{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
+.s1{width:62vmax;height:62vmax;left:-22vmax;top:-18vmax;background:radial-gradient(circle,rgba(109,18,48,.55),transparent 65%);animation:drift1 46s ease-in-out infinite alternate}
+.s2{width:58vmax;height:58vmax;right:-24vmax;top:18vmax;background:radial-gradient(circle,rgba(59,28,94,.55),transparent 65%);animation:drift2 58s ease-in-out infinite alternate}
+.s3{width:46vmax;height:46vmax;left:20vmax;bottom:-20vmax;background:radial-gradient(circle,rgba(217,184,114,.16),transparent 62%);animation:drift3 66s ease-in-out infinite alternate}
+@keyframes drift1{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(8vmax,6vmax,0) scale(1.15)}}
+@keyframes drift2{from{transform:translate3d(0,0,0) scale(1.1)}to{transform:translate3d(-9vmax,-7vmax,0) scale(1)}}
+@keyframes drift3{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-7vmax,-5vmax,0) scale(1.2)}}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");}
+
+/* ---------- каркас ---------- */
+.wrap{max-width:600px;margin:0 auto;padding:22px 18px calc(40px + env(safe-area-inset-bottom));position:relative}
+.topbar{display:flex;justify-content:flex-end;align-items:center;gap:8px;height:34px}
+.icon-btn{background:var(--glass);border:1px solid var(--glass-brd);color:var(--muted);font:600 12px/1 'Manrope',sans-serif;
+  letter-spacing:.08em;padding:9px 13px;border-radius:999px;cursor:pointer;transition:.25s;display:inline-flex;gap:6px;align-items:center}
+.icon-btn:hover{color:var(--ink);border-color:rgba(217,184,114,.45)}
+.icon-btn:active{transform:scale(.96)}
+
+header.logo{text-align:center;padding:14px 0 26px}
+.orb{font-size:46px;line-height:1;display:inline-block;filter:drop-shadow(0 0 22px rgba(161,28,69,.75));animation:orb 5.5s ease-in-out infinite}
+@keyframes orb{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-8px) rotate(4deg)}}
+h1{font-family:'Unbounded',sans-serif;font-weight:800;font-size:clamp(30px,8.4vw,46px);margin:12px 0 0;
+  letter-spacing:.02em;background:linear-gradient(180deg,#fff7ea 0%,var(--gold) 55%,#7c5f2c 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;}
+.tagline{color:var(--muted);font-size:14px;margin-top:10px;letter-spacing:.01em}
+
+.card{background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.02));
+  border:1px solid var(--glass-brd);border-radius:var(--radius);padding:22px;margin-bottom:16px;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow);
+  animation:rise .55s cubic-bezier(.2,.7,.3,1) both}
+.card:nth-of-type(2){animation-delay:.06s}
+.card:nth-of-type(3){animation-delay:.12s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.label{font:800 11px/1 'Manrope',sans-serif;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+.sub{color:var(--muted);font-size:13px;margin-top:8px}
+
+input[type=text],textarea{width:100%;margin-top:14px;background:rgba(0,0,0,.35);border:1px solid var(--glass-brd);
+  border-radius:16px;color:var(--ink);font:500 16px/1.45 'Manrope',sans-serif;padding:15px 16px;outline:none;transition:.25s;resize:none}
+input[type=text]{font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:.01em}
+input::placeholder,textarea::placeholder{color:#5e554f;font-family:'Manrope',sans-serif;font-weight:400}
+input:focus,textarea:focus{border-color:rgba(217,184,114,.5);box-shadow:0 0 0 4px rgba(217,184,114,.08);background:rgba(0,0,0,.5)}
+textarea.flash{border-color:rgba(217,184,114,.65);box-shadow:0 0 0 5px rgba(217,184,114,.1)}
+.victim-preview{font-family:'Unbounded',sans-serif;font-weight:800;font-size:clamp(22px,6.5vw,30px);
+  margin-top:14px;color:var(--ink);text-transform:uppercase;letter-spacing:.02em;word-break:break-word;
+  text-shadow:0 0 26px rgba(217,184,114,.28);min-height:0;opacity:0;max-height:0;overflow:hidden;transition:.35s}
+.victim-preview.on{opacity:1;max-height:130px;margin-top:16px}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{background:rgba(255,255,255,.04);border:1px solid var(--glass-brd);border-radius:999px;color:#cbc2bb;
+  font:600 13px/1 'Manrope',sans-serif;padding:11px 14px;cursor:pointer;transition:.2s;display:inline-flex;gap:6px;align-items:center}
+.chip:hover{border-color:rgba(217,184,114,.4);color:var(--ink)}
+.chip:active{transform:scale(.95)}
+.chip.on{background:linear-gradient(135deg,rgba(161,28,69,.55),rgba(59,28,94,.5));border-color:rgba(217,184,114,.55);color:#fff}
+.chip.dice{border-style:dashed;color:var(--gold)}
+.hint{color:#5e564f;font-size:11.5px;margin-top:12px;letter-spacing:.01em}
+
+/* ---------- ползунок силы ---------- */
+.power-head{display:flex;justify-content:space-between;align-items:baseline}
+.power-name{font:700 14px/1 'Manrope',sans-serif;color:var(--ink)}
+.slider-wrap{margin-top:20px;position:relative}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:99px;outline:none;
+  background:linear-gradient(90deg,#3c6a4a 0%,var(--wine-soft) 50%,#7a1020 100%);margin:0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;cursor:pointer;
+  background:radial-gradient(circle at 35% 30%,#fff6e6,var(--gold) 45%,#6b4f21);border:2px solid rgba(0,0,0,.5);
+  box-shadow:0 0 0 6px rgba(217,184,114,.12),0 6px 18px rgba(0,0,0,.6);transition:box-shadow .2s}
+input[type=range]::-webkit-slider-thumb:active{box-shadow:0 0 0 11px rgba(217,184,114,.16),0 6px 18px rgba(0,0,0,.6)}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid rgba(0,0,0,.5);
+  background:radial-gradient(circle at 35% 30%,#fff6e6,var(--gold) 45%,#6b4f21)}
+.ticks{display:flex;justify-content:space-between;margin-top:12px}
+.tick{font-size:12px;color:#6c635d;transition:.25s;text-align:center;flex:1}
+.tick span{display:block;font-size:19px;margin-bottom:4px;filter:grayscale(.7);transition:.25s}
+.tick.on{color:var(--gold)}
+.tick.on span{filter:none;transform:scale(1.22)}
+
+/* ---------- кнопки ---------- */
+.btn{width:100%;border:none;border-radius:18px;cursor:pointer;font-family:'Unbounded',sans-serif;
+  font-weight:600;letter-spacing:.06em;transition:transform .15s, box-shadow .3s, filter .3s}
+.btn:active{transform:scale(.975)}
+.btn-main{font-size:clamp(16px,4.6vw,19px);padding:20px 16px;color:#fff5e6;margin-top:6px;
+  background:linear-gradient(135deg,var(--wine) 0%,#40143a 48%,var(--violet) 100%);
+  box-shadow:0 0 0 1px rgba(217,184,114,.35) inset,0 14px 40px rgba(109,18,48,.5);position:relative;overflow:hidden;
+  animation:breathe 4s ease-in-out infinite}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 1px rgba(217,184,114,.3) inset,0 14px 34px rgba(109,18,48,.42)}
+  50%{box-shadow:0 0 0 1px rgba(217,184,114,.6) inset,0 16px 52px rgba(161,28,69,.62)}}
+.btn-main::after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent);animation:sheen 4.5s ease-in-out infinite}
+@keyframes sheen{0%,72%{left:-60%}100%{left:130%}}
+.btn-ghost{background:var(--glass);border:1px solid var(--glass-brd);color:var(--ink);font-size:13px;padding:15px 12px}
+.btn-ghost:hover{border-color:rgba(217,184,114,.45)}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.btn-row.one{grid-template-columns:1fr}
+
+/* ---------- проклятие дня ---------- */
+.daily{display:flex;flex-direction:column;gap:12px}
+.daily-text{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:17px;line-height:1.55;color:#e8dfd4}
+.daily-foot{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.mini-btn{background:transparent;border:1px solid var(--glass-brd);color:var(--gold);border-radius:999px;
+  font:700 11px/1 'Manrope',sans-serif;letter-spacing:.14em;padding:10px 15px;cursor:pointer;transition:.2s}
+.mini-btn:hover{background:rgba(217,184,114,.1)}
+.mini-btn:active{transform:scale(.95)}
+
+/* ---------- ритуал ---------- */
+.ritual{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 50%,rgba(8,6,6,.86),rgba(4,3,3,.97));backdrop-filter:blur(7px)}
+.ritual.on{display:flex;animation:fadeIn .3s ease both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.circle-box{position:relative;width:min(78vw,330px);aspect-ratio:1}
+.circle-box svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ring-a{transform-origin:50% 50%;animation:spin 5s linear infinite}
+.ring-b{transform-origin:50% 50%;animation:spin 7s linear infinite reverse}
+.runes{transform-origin:50% 50%;animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.circle-box{animation:summon 1.4s cubic-bezier(.2,.8,.3,1) both}
+@keyframes summon{0%{opacity:0;transform:scale(.55)}35%{opacity:1}70%{transform:scale(1.02)}100%{opacity:1;transform:scale(1)}}
+.ritual-core{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:54px;
+  filter:drop-shadow(0 0 30px rgba(217,184,114,.85));animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+.ritual-word{position:absolute;left:0;right:0;bottom:-58px;text-align:center;color:var(--gold);
+  font:700 11px/1 'Manrope',sans-serif;letter-spacing:.35em;opacity:.85;animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:.35}50%{opacity:.95}}
+
+/* ---------- результат ---------- */
+.view{display:none}
+.view.on{display:block}
+.result-card{background:linear-gradient(170deg,rgba(109,18,48,.26),rgba(59,28,94,.16) 55%,rgba(255,255,255,.03));
+  border:1px solid rgba(217,184,114,.28);border-radius:26px;padding:30px 22px 26px;box-shadow:0 0 70px rgba(161,28,69,.22),var(--shadow);
+  position:relative;overflow:hidden;animation:rise .6s cubic-bezier(.2,.7,.3,1) both}
+.result-card::before{content:'';position:absolute;top:-40%;left:-10%;width:120%;height:80%;
+  background:radial-gradient(ellipse,rgba(217,184,114,.14),transparent 62%);pointer-events:none}
+.res-victim{font-family:'Unbounded',sans-serif;font-weight:800;font-size:clamp(26px,8vw,40px);text-align:center;
+  margin:0;text-transform:uppercase;word-break:break-word;line-height:1.12;
+  background:linear-gradient(180deg,#fff8ec,#d9b872 70%,#8a6a30);-webkit-background-clip:text;background-clip:text;color:transparent}
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0 18px;color:var(--gold-dim);font-size:18px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(217,184,114,.45),transparent)}
+.res-text{font-family:'Playfair Display',Georgia,serif;font-size:clamp(21px,5.9vw,27px);line-height:1.46;
+  color:#f8f2e8;font-style:italic;text-align:center;opacity:0;transform:translateY(14px);
+  animation:lineIn .65s cubic-bezier(.2,.8,.3,1) .2s forwards}
+@keyframes lineIn{to{opacity:1;transform:none}}
+.res-kicker{font:800 10px/1.4 'Manrope',sans-serif;letter-spacing:.3em;color:var(--gold);text-align:center;
+  text-transform:uppercase;margin-top:22px}
+.res-meta{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:18px}
+.tag{background:rgba(0,0,0,.3);border:1px solid var(--glass-brd);border-radius:999px;padding:7px 12px;
+  font:600 12px/1 'Manrope',sans-serif;color:#b9aea6}
+.back{display:block;width:100%;text-align:center;background:none;border:none;color:var(--muted);
+  font:600 13px 'Manrope',sans-serif;padding:18px;cursor:pointer}
+.back:hover{color:var(--ink)}
+
+/* ---------- модалки ---------- */
+.modal{position:fixed;inset:0;z-index:70;display:none;background:rgba(5,4,4,.7);backdrop-filter:blur(8px);
+  align-items:flex-end;justify-content:center}
+.modal.on{display:flex;animation:fadeIn .25s both}
+.sheet{width:100%;max-width:600px;max-height:88dvh;overflow-y:auto;background:linear-gradient(180deg,#171214,#0c0a0a);
+  border:1px solid var(--glass-brd);border-bottom:none;border-radius:26px 26px 0 0;padding:22px 18px calc(26px + env(safe-area-inset-bottom));
+  animation:sheetUp .38s cubic-bezier(.2,.8,.3,1) both}
+@keyframes sheetUp{from{transform:translateY(60px);opacity:.4}to{transform:none;opacity:1}}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.sheet-title{font-family:'Unbounded',sans-serif;font-weight:600;font-size:16px;letter-spacing:.04em}
+.close{background:var(--glass);border:1px solid var(--glass-brd);color:var(--ink);width:34px;height:34px;
+  border-radius:50%;font-size:17px;line-height:1;cursor:pointer}
+.hist-item{background:rgba(255,255,255,.035);border:1px solid var(--glass-brd);border-radius:18px;padding:15px 16px;
+  margin-bottom:10px;cursor:pointer;transition:.2s}
+.hist-item:hover{border-color:rgba(217,184,114,.4);background:rgba(255,255,255,.06)}
+.hist-item:active{transform:scale(.99)}
+.hist-name{font-family:'Unbounded',sans-serif;font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:.01em}
+.hist-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;align-items:center}
+.hist-row .tag{font-size:11px;padding:6px 10px}
+.hist-date{color:#6c635d;font-size:11px;margin-left:auto}
+.empty{text-align:center;color:var(--muted);font-size:14px;padding:38px 10px;line-height:1.6}
+#shareCanvas{width:100%;max-width:250px;display:block;margin:0 auto;border-radius:16px;
+  box-shadow:0 20px 50px rgba(0,0,0,.6);border:1px solid rgba(217,184,114,.2)}
+.share-hint{text-align:center;color:var(--muted);font-size:12.5px;margin-top:16px;line-height:1.5}
+
+.toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,24px);z-index:90;opacity:0;pointer-events:none;
+  background:rgba(20,16,17,.96);border:1px solid rgba(217,184,114,.4);color:var(--ink);padding:13px 22px;border-radius:999px;
+  font:700 13px 'Manrope',sans-serif;transition:.3s;box-shadow:0 14px 40px rgba(0,0,0,.6);max-width:86vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.footer{text-align:center;color:#4f4842;font-size:11px;letter-spacing:.12em;padding:26px 0 8px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;animation-iteration-count:1 !important}
+  .res-text{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="bg"><div class="smoke s1"></div><div class="smoke s2"></div><div class="smoke s3"></div></div>
+<div class="grain"></div>
+
+<div class="wrap">
+  <div class="topbar">
+    <button class="icon-btn" id="histBtn">📜 МОИ ПРОКЛЯТИЯ</button>
+  </div>
+
+  <!-- ===== ГЛАВНЫЙ ЭКРАН ===== -->
+  <div class="view on" id="viewMain">
+    <header class="logo">
+      <div class="orb">🔮</div>
+      <h1>ПРОКЛИНАТОР</h1>
+      <div class="tagline">Когда просто «ну и ладно» недостаточно.</div>
+    </header>
+
+    <section class="card">
+      <div class="label">Кого проклинаем?</div>
+      <input type="text" id="nameInput" placeholder="Например: Алексей" maxlength="28" autocomplete="off" spellcheck="false">
+      <div class="victim-preview" id="victimPreview"></div>
+    </section>
+
+    <section class="card">
+      <div class="label">🔮 За что проклинаем?</div>
+      <div class="sub">Выберите ситуацию или напишите своими словами</div>
+      <textarea id="sitInput" rows="3" placeholder="Например: не вернул деньги и теперь не отвечает" maxlength="180"></textarea>
+      <div class="chips" id="chips"></div>
+      <div class="hint">Нажимайте на категорию ещё раз — ситуация будет меняться.</div>
+    </section>
+
+    <section class="card">
+      <div class="power-head">
+        <div class="label">Сила проклятия</div>
+        <div class="power-name" id="powerName">😈 Жёсткое</div>
+      </div>
+      <div class="slider-wrap">
+        <input type="range" id="power" min="1" max="3" step="1" value="2">
+        <div class="ticks" id="ticks">
+          <div class="tick"><span>😇</span>Лёгкое</div>
+          <div class="tick on"><span>😈</span>Жёсткое</div>
+          <div class="tick"><span>☠️</span>Без пощады</div>
+        </div>
+      </div>
+      <button class="btn btn-main" id="castBtn">🔮 ПРОКЛЯСТЬ</button>
+      <div class="btn-row one">
+        <button class="btn btn-ghost" id="randomBtn">🎲 СЛУЧАЙНОЕ ПРОКЛЯТИЕ</button>
+      </div>
+    </section>
+
+    <section class="card daily">
+      <div class="label">🔮 Проклятие дня</div>
+      <div class="daily-text" id="dailyText"></div>
+      <div class="daily-foot">
+        <span style="color:#5e564f;font-size:11px;letter-spacing:.1em" id="dailyDate"></span>
+        <button class="mini-btn" id="dailyShare">ПОДЕЛИТЬСЯ</button>
+      </div>
+    </section>
+
+    <div class="footer">ПРОКЛИНАТОР · всё это шутка, но приятно</div>
+  </div>
+
+  <!-- ===== РЕЗУЛЬТАТ ===== -->
+  <div class="view" id="viewResult">
+    <div class="result-card" id="resultCard">
+      <div class="res-victim" id="resVictim"></div>
+      <div class="divider">🔮</div>
+      <div class="res-text" id="resText"></div>
+      <div class="res-kicker">Проклятие активировано</div>
+      <div class="res-meta" id="resMeta"></div>
+    </div>
+    <div class="btn-row one" style="margin-top:14px">
+      <button class="btn btn-main" id="shareBtn">📤 ОТПРАВИТЬ</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" id="againBtn">🔄 ЕЩЁ РАЗ</button>
+      <button class="btn btn-ghost" id="copyBtn">📋 СКОПИРОВАТЬ</button>
+    </div>
+    <button class="back" id="backBtn">← вернуться и проклясть другого</button>
+  </div>
+</div>
+
+<!-- ===== РИТУАЛ ===== -->
+<div class="ritual" id="ritual">
+  <div class="circle-box">
+    <svg viewBox="0 0 200 200" aria-hidden="true">
+      <defs>
+        <radialGradient id="glow"><stop offset="0%" stop-color="#d9b872" stop-opacity=".45"/><stop offset="100%" stop-color="#6d1230" stop-opacity="0"/></radialGradient>
+      </defs>
+      <circle cx="100" cy="100" r="95" fill="url(#glow)"/>
+      <g class="ring-a"><circle cx="100" cy="100" r="86" fill="none" stroke="#d9b872" stroke-opacity=".55" stroke-width="1" stroke-dasharray="3 9"/></g>
+      <g class="ring-b"><circle cx="100" cy="100" r="70" fill="none" stroke="#a11c45" stroke-opacity=".75" stroke-width="1.4" stroke-dasharray="26 12"/>
+        <polygon points="100,34 157,133 43,133" fill="none" stroke="#d9b872" stroke-opacity=".45" stroke-width="1"/>
+        <polygon points="100,166 43,67 157,67" fill="none" stroke="#d9b872" stroke-opacity=".3" stroke-width="1"/></g>
+      <g class="runes" id="runes"></g>
+      <circle cx="100" cy="100" r="52" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="1"/>
+    </svg>
+    <div class="ritual-core">🔮</div>
+    <div class="ritual-word" id="ritualWord">СОЗЫВАЕМ ДРЕВНИЕ СИЛЫ</div>
+  </div>
+</div>
+
+<!-- ===== ИСТОРИЯ ===== -->
+<div class="modal" id="histModal">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div class="sheet-title">📜 МОИ ПРОКЛЯТИЯ</div>
+      <button class="close" data-close="histModal">✕</button>
+    </div>
+    <div id="histList"></div>
+    <button class="btn btn-ghost" id="clearHist" style="margin-top:8px">🗑 ОЧИСТИТЬ ИСТОРИЮ</button>
+  </div>
+</div>
+
+<!-- ===== ПОДЕЛИТЬСЯ ===== -->
+<div class="modal" id="shareModal">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div class="sheet-title">📤 КАРТОЧКА</div>
+      <button class="close" data-close="shareModal">✕</button>
+    </div>
+    <canvas id="shareCanvas" width="1080" height="1920"></canvas>
+    <div class="btn-row">
+      <button class="btn btn-ghost" id="sendBtn">📤 ОТПРАВИТЬ</button>
+      <button class="btn btn-ghost" id="dlBtn">📥 СКАЧАТЬ</button>
+    </div>
+    <div class="btn-row one"><button class="btn btn-ghost" id="copyBtn2">📋 СКОПИРОВАТЬ ТЕКСТ</button></div>
+    <div class="share-hint">Картинка 9:16 — как раз для WhatsApp, Telegram и сторис.</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+/* =========================================================
+   ПРОКЛИНАТОР
+   Формат проклятия: одна короткая фраза на «ты», с именем внутри.
+   Всё безобидное: бытовые неудачи, нелепые совпадения, мелкие раздражения.
+
+   КАК ДОБАВИТЬ КАТЕГОРИЮ: добавьте объект в CATEGORIES —
+   {id, emoji, title, keys, situations:[...], curses:[...]}. Больше ничего менять не нужно.
+   Форма рода пишется как {мужская|женская}: «{сказал|сказала}».
+   ========================================================= */
+
+const CATEGORIES = [
+{
+  id:'ex', emoji:'💔', title:'{Бывший|Бывшая}',
+  keys:['бывш','расста','ушёл','ушла','бросил','мы были','вернуть чувства'],
+  situations:[
+    '{Ушёл|Ушла}, но исправно ставит лайки.',
+    'Расстались, а сторис смотрит {первым|первой}.',
+    '{Сказал|Сказала}, что мы можем остаться друзьями.',
+    'Через месяц {написал|написала}: «Привет, как ты?»',
+    'Появляется ровно тогда, когда у меня всё наладилось.',
+    'Пишет в час ночи «не спишь?».',
+    '{Забрал|Забрала} колонку, {оставил|оставила} свои носки.',
+    '{Рассказал|Рассказала} общим друзьям свою версию.',
+    'Просит вернуть подарки.',
+    '{Лайкнул|Лайкнула} фото трёхлетней давности.',
+    'Всем говорит, что это {он ушёл|она ушла}.',
+    'Пишет «скучаю» и пропадает на три недели.',
+    '{Позвал|Позвала} «просто поговорить» в наше кафе.',
+    '{Обещал|Обещала} вернуть книги. В прошлом году.',
+    'Пишет, только когда {ему|ей} плохо.',
+    '{Поставил|Поставила} статус «всё сложно».',
+    'Спрашивает про субботу вечером в четверг ночью.',
+    '{Подписался|Подписалась} на мою маму.',
+    '{Начал|Начала} новую жизнь с моего плейлиста.',
+    'Смотрит все сторис и не отвечает на сообщения.'
+  ],
+  curses:[
+    'Пусть каждый твой «привет, как ты?» приходит ровно тогда, когда у всех всё хорошо без тебя.',
+    'Пусть все твои новые начала начинаются с чужого плейлиста и заканчиваются одной и той же песней.',
+    'Пусть тебе вечно снится, что ты {забыл|забыла} что-то важное в той самой квартире.',
+    'Пусть каждая твоя сторис набирает просмотры — и ни одного от того, ради кого она снята.',
+    'Пусть «останемся друзьями» сбудется буквально: тебя будут звать помогать с переездом.',
+    'Пусть твой новый человек тоже обожает рассказывать про бывших. Три часа подряд.',
+    'Пусть все твои ночные «не спишь?» доставляются утром и зачитываются вслух.',
+    'Пусть однажды тебе напишут «привет, как ты?» — и ответа не будет четыре месяца.',
+    'Пусть каждая годовщина, о которой ты {забыл|забыла}, напоминает о себе рекламой цветов.',
+    'Пусть тебе достанется человек, который хранит скриншоты всех разговоров.',
+    'Пусть твоя новая влюблённость случится ровно в тот день, когда ты решишь «больше никогда».',
+    'Пусть все твои «я {изменился|изменилась}» проверяют те, кто помнит, как было.'
+  ]
+},
+{
+  id:'ignore', emoji:'👻', title:'Игнорирует',
+  keys:['игнор','не отвеча','молчит','не пишет','пропал','не берёт трубку','прочитал и'],
+  situations:[
+    '{Прочитал|Прочитала} и {исчез|исчезла}.',
+    'Печатает уже третий день.',
+    '«Онлайн пять минут назад». Ответа нет.',
+    'Ответит через неделю: «ой, не {увидел|увидела}».',
+    'В сторис {активный|активная}, в личке {мёртвый|мёртвая}.',
+    '{Ответил|Ответила} всем, кроме меня.',
+    'Лайкает посты, но не отвечает.',
+    '{Сбросил|Сбросила} звонок и не {перезвонил|перезвонила}.',
+    'На важный вопрос {поставил|поставила} 👍.',
+    '{Обещал|Обещала} ответить вечером. Три вечера назад.',
+    'Молчит всю неделю, а в пятницу пишет «как дела?».',
+    'Отвечает только там, где что-то нужно {ему|ей}.',
+    'Голосовое {прослушал|прослушала} и {забыл|забыла}.',
+    'Каждый день пишет «давай завтра».',
+    'В общем чате активен, в личке — нет.',
+    '{Отметил|Отметила} меня в меме, на сообщение молчит.',
+    '{Пропал|Пропала} сразу после «нам надо обсудить».',
+    '{Ответил|Ответила} через месяц одним словом: «ага».',
+    'Не отвечает, но смотрит все мои сторис.',
+    '{Прочитал|Прочитала} и {ушёл|ушла} ставить лайки другим.'
+  ],
+  curses:[
+    'Пусть твои сообщения доставляются мгновенно, а ответы на них приходят через четверо суток.',
+    'Пусть каждый раз, когда ты печатаешь «...», человек на том конце выходит из чата.',
+    'Пусть тебе всю жизнь слышится уведомление, которого не было.',
+    'Пусть твоё «отвечу позже» возвращается письмом из банка с уже просроченным сроком.',
+    'Пусть однажды ты напишешь очень срочно — и подождёшь ровно столько, сколько ждали тебя.',
+    'Пусть все твои «ага» приходят тем, кто писал тебе по три абзаца.',
+    'Пусть галочки остаются серыми ровно тогда, когда ответ нужен тебе.',
+    'Пусть твой собственный телефон показывает «печатает…» вечно.',
+    'Пусть все непрочитанные уведомления приходят тебе одной пачкой в четыре утра.',
+    'Пусть «я не {заметил|заметила}» станет официальной версией для всех, кто тебя ждёт.',
+    'Пусть каждый важный для тебя человек отвечает ровно с той же скоростью, что и ты.',
+    'Пусть телефон разряжается ровно на том входящем, которого ты ждёшь.'
+  ]
+},
+{
+  id:'money', emoji:'💸', title:'Не вернул деньги',
+  keys:['деньг','долг','занял','заняла','перевод','тысяч','оплат','не заплатил','вернул деньги'],
+  situations:[
+    '{Занял|Заняла} «до пятницы». В марте.',
+    '«Скину вечером» — уже третью неделю.',
+    '{Пропал|Пропала} сразу после перевода.',
+    '{Купил|Купила} новые кроссовки, долг не {вернул|вернула}.',
+    'Говорит «я помню», но не переводит.',
+    'Просит ещё, не вернув прошлое.',
+    'Отдыхает на море, {должен|должна} мне за такси.',
+    '«Давай я тебе лучше потом еды закажу».',
+    '{Занял|Заняла} тысячу, {вернул|вернула} пятьсот.',
+    'Счёт делили поровну — платёж ушёл с одной карты.',
+    '«Как зарплата придёт». Три зарплаты назад.',
+    'Скидывает кружочки вместо денег.',
+    '«У меня карта не работает» — уже полгода.',
+    'Помнит всё, кроме суммы.',
+    'Всем рассказывает, что {вернул|вернула}. Половину.',
+    'Каждый раз «ой, {забыл|забыла}».',
+    'Просит напомнить, а потом обижается на напоминание.',
+    '{Занял|Заняла} на такси, {уехал|уехала} на бизнес-такси.',
+    'Долг есть, а человека нет.',
+    'Пишет «я помню про деньги» вместо того, чтобы их отправить.'
+  ],
+  curses:[
+    'Пусть каждое твоё «скину завтра» сбывается честно: завтра наступает, перевод — нет.',
+    'Пусть все найденные в старой куртке купюры оказываются вышедшими из обращения.',
+    'Пусть кэшбэк капает щедро и только в той категории, которой ты не пользуешься.',
+    'Пусть счёт всегда делят на шестерых, и лишние сто рублей всегда твои.',
+    'Пусть скидка заканчивается ровно на тебе, а цена растёт в момент оплаты.',
+    'Пусть однажды ты займёшь у человека с такой же памятью, как у тебя.',
+    'Пусть твои деньги всегда приходят вовремя. На старую карту.',
+    'Пусть каждая твоя покупка через два дня падает в цене на сорок процентов.',
+    'Пусть банкомат выдаёт только крупные купюры ровно тогда, когда нужна мелочь.',
+    'Пусть твой перевод всегда уходит «в обработку» и зависает там до понедельника.',
+    'Пусть все твои «потом отдам» соберутся в один чат и назначат дату.',
+    'Пусть к тебе вернётся ровно та же сумма — в виде чужого «займи до пятницы».'
+  ]
+},
+{
+  id:'annoy', emoji:'🤬', title:'Бесит',
+  keys:['бесит','раздража','достал','невыносим','нерв','голосов','звонит'],
+  situations:[
+    'Пишет «Привет» и ждёт, пока сам спросишь, что нужно.',
+    'Звонит и спрашивает: «Ты {занят|занята}?»',
+    'Голосовое на семь минут.',
+    '{Прочитал|Прочитала} и {ответил|ответила} через три дня.',
+    'Опаздывает и пишет «я уже подъезжаю».',
+    'Присылает пятнадцать сообщений по одному слову.',
+    'Говорит «мне всё равно» и три часа объясняет почему.',
+    'Включает громкую связь в кафе.',
+    'Пересказывает фильм, который я иду смотреть.',
+    'Отвечает «ясно» и исчезает.',
+    'Комментирует, что я ем.',
+    'Даёт советы, о которых никто не просил.',
+    'Начинает фразу и говорит «ладно, неважно».',
+    'Пишет в рабочий чат в полночь.',
+    'Смеётся над своими шутками громче всех.',
+    'Скидывает ссылку без единого слова.',
+    'Жуёт в микрофон на созвоне.',
+    'Спрашивает, сколько я зарабатываю.',
+    'Объясняет, как надо было сделать. Постфактум.',
+    'Звонит вместо того, чтобы написать одно слово.'
+  ],
+  curses:[
+    'Пусть все твои голосовые слушают на скорости два икс. Даже самые важные.',
+    'Пусть на каждое твоё «ты {занят|занята}?» отвечают просто «да».',
+    'Пусть твоё мнение всегда будет громким, а микрофон — всегда выключенным.',
+    'Пусть каждый твой монолог прерывают словами «прости, я на минутку».',
+    'Пусть ты однажды встретишь человека точно такого же, как ты, и проведёшь с ним весь вечер.',
+    'Пусть твоя коронная фраза станет мемом. Не в ту сторону.',
+    'Пусть пятнадцать сообщений по одному слову приходят тебе. В три часа ночи.',
+    'Пусть каждый твой непрошеный совет сбывается у соседа и возвращается к тебе счётом.',
+    'Пусть твой звонок «ты {занят|занята}?» всегда попадает ровно в чужой обед.',
+    'Пусть каждый фильм, который ты идёшь смотреть, тебе заранее пересказывают.',
+    'Пусть на все твои длинные сообщения отвечают «ясно» и исчезают.',
+    'Пусть громкая связь включается сама в самом тихом вагоне.'
+  ]
+},
+{
+  id:'client', emoji:'💼', title:'Клиент',
+  keys:['клиент','заказчик','правк','тз','логотип','заказ','макет','подешевле','срочно','кп','скидк'],
+  situations:[
+    '{Сказал|Сказала}, что подумает, и {исчез|исчезла}.',
+    'Просит скидку после минимальной цены.',
+    'Срочно {запросил|запросила} КП и {пропал|пропала}.',
+    '{Ушёл|Ушла} к другим, через месяц {вернулся|вернулась}.',
+    '«А дешевле есть?»',
+    '«Нам нужно вчера».',
+    'Тринадцатая «маленькая правочка».',
+    '«Сделайте как у конкурентов, но совсем по-другому».',
+    '{Прислал|Прислала} логотип вставленным в Word.',
+    '«Мне не нравится, но не знаю почему».',
+    '{Согласовал|Согласовала} макет и через неделю {передумал|передумала}.',
+    '«А можно то же самое, но за половину?»',
+    'Оплата «после результата». Результат работает второй месяц.',
+    'Пишет в выходные и удивляется тишине.',
+    '«Созвон на пять минут» — час сорок.',
+    'Присылает правки голосовыми.',
+    '«Это же несложно, просто поменять».',
+    '{Прислал|Прислала} ТЗ одним предложением.',
+    '«У нас есть знакомый, он делает дешевле».',
+    '{Пропал|Пропала} на этапе оплаты и {вернулся|вернулась} с новой срочностью.'
+  ],
+  curses:[
+    'Пусть ты получишь ровно то, что {просил|просила}. Слово в слово. Вместе с опечаткой.',
+    'Пусть твоя «маленькая правочка» вернётся к тебе чужим ТЗ на восемнадцать страниц.',
+    'Пусть вселенная согласится на «надо вчера» и выставит двойной ночной тариф.',
+    'Пусть все твои файлы навсегда называются «финал_финал2_итог_новый».',
+    'Пусть однажды ты окажешься исполнителем у такого же заказчика, как ты.',
+    'Пусть твой логотип всегда будет «чуть побольше». И ещё чуть.',
+    'Пусть «а дешевле есть?» звучит каждый раз, когда ты называешь свою цену.',
+    'Пусть твой созвон «на пять минут» идёт час сорок. Ежедневно.',
+    'Пусть каждый твой «просто вопросик» приходит тебе в пятницу в 18:59.',
+    'Пусть знакомый, который делает дешевле, сделает тебе ровно на эту сумму.',
+    'Пусть твои голосовые с правками расшифровывает тот, кто отвечает так же.',
+    'Пусть стопроцентную предоплату у тебя попросят там, где ты меньше всего этого ждёшь.'
+  ]
+},
+{
+  id:'promise', emoji:'🗣️', title:'Много обещает',
+  keys:['обеща','с понедельника','точно приду','не сдержал','слово','перезвоню','выезжаю'],
+  situations:[
+    '«Сто процентов буду». Не {был|была}.',
+    '«С понедельника точно». Четвёртый понедельник.',
+    '{Обещал|Обещала} перезвонить. В прошлом году.',
+    '«Я всё сделаю» — и тишина.',
+    '«Уже выезжаю» из дома, где ещё не {встал|встала}.',
+    '{Обещал|Обещала} помочь с переездом и {заболел|заболела}.',
+    '«Договорились!» — и {забыл|забыла}.',
+    'Строит планы на лето. Третье лето подряд.',
+    '«Я тебе скину» — не {скинул|скинула}.',
+    '{Обещал|Обещала} прийти на день рождения. {Пришёл|Пришла} в сторис.',
+    '«Сделаю сегодня вечером». Вечер был вчера.',
+    '«Подумаю и напишу». Ни того, ни другого.',
+    '{Клялся|Клялась} бросить курить. С сигаретой в руке.',
+    '«Точно-точно, без вариантов». Варианты нашлись.',
+    'Говорит «я помню» — не помнит.',
+    '«Я буквально на пять минут» — два часа.',
+    '{Обещал|Обещала} вернуть, {занял|заняла} ещё.',
+    'Каждый раз клянётся, что в последний раз.',
+    '«Завтра начинаю новую жизнь». Завтра не наступает.',
+    '{Обещал|Обещала} позвать на праздник — праздник прошёл без меня.'
+  ],
+  curses:[
+    'Пусть все твои «сто процентов» сбываются ровно на сорок.',
+    'Пусть каждое твоё «уже выезжаю» добавляет навигатору ещё сорок минут.',
+    'Пусть твоё «с понедельника» начинается во вторник, который окажется средой.',
+    'Пусть ты однажды сдержишь слово — и никто не поверит.',
+    'Пусть твои планы сбудутся полностью. В другом городе. Без тебя.',
+    'Пусть твои «пять минут» честно превращаются в два часа. Каждый раз.',
+    'Пусть все, кому ты что-то {обещал|обещала}, соберутся в одном чате и добавят туда тебя.',
+    'Пусть «я перезвоню» возвращается к тебе тремя рабочими днями чистой тишины.',
+    'Пусть каждое твоё «я помню» проверяют календарным напоминанием при всех.',
+    'Пусть твоё «я точно в деле» запишут на диктофон и включат на встрече.',
+    'Пусть твоя новая жизнь начинается с понедельника, который всё время переносят.',
+    'Пусть тебе обещают ровно так же. И ровно столько же раз.'
+  ]
+},
+{
+  id:'road', emoji:'🚗', title:'Подрезал',
+  keys:['подрез','дорог','машин','парков','водит','сигналил','двор','пробк'],
+  situations:[
+    '{Подрезал|Подрезала} и ещё {посигналил|посигналила}.',
+    '{Влез|Влезла} без очереди в пробке.',
+    '{Встал|Встала} на два парковочных места.',
+    'Мигает дальним в спину.',
+    'Паркуется на тротуаре у подъезда.',
+    '{Занял|Заняла} место для инвалидов «на пять минут».',
+    'Поворачивает без поворотника.',
+    'Музыка такая, что дрожат окна.',
+    '{Встал|Встала} в левом ряду и едет шестьдесят.',
+    '{Открыл|Открыла} дверь и {поцарапал|поцарапала} чужую машину.',
+    'Бибикает через секунду после зелёного.',
+    'Паркуется вторым рядом с аварийкой.',
+    '{Проехал|Проехала} по луже мимо пешеходов.',
+    'Не {пропустил|пропустила} на зебре.',
+    '{Занял|Заняла} место, которое полчаса откапывали от снега.',
+    'Стоит на выезде и разговаривает по телефону.',
+    '{Перестроился|Перестроилась} через три полосы разом.',
+    'Едет по обочине мимо всей пробки.',
+    '{Поставил|Поставила} машину впритык — не открыть дверь.',
+    '{Включил|Включила} аварийку и считает, что теперь можно всё.'
+  ],
+  curses:[
+    'Пусть ты всегда первым подъезжаешь к светофору, где красный длится полторы минуты.',
+    'Пусть соседняя полоса едет быстро ровно до того момента, как ты в неё перестроишься.',
+    'Пусть твоя машина остаётся чистой ровно четыре часа.',
+    'Пусть парковка находится всегда: платная, с неработающим терминалом.',
+    'Пусть все, кого ты {подрезал|подрезала}, окажутся во дворе, когда ты будешь сдавать назад.',
+    'Пусть навигатор говорит «через двести метров поверните» ровно через двести один.',
+    'Пусть твоя аварийка включается сама. На посту ДПС.',
+    'Пусть чужой дальний свет находит тебя в любом зеркале.',
+    'Пусть шлагбаум опускается ровно перед твоим капотом.',
+    'Пусть рядом всегда паркуются вплотную и уезжают через сутки.',
+    'Пусть каждая лужа находит тебя, когда ты идёшь пешком.',
+    'Пусть колонка на заправке всегда оказывается с той стороны, где нет лючка.'
+  ]
+},
+{
+  id:'heart', emoji:'❤️', title:'Разбил сердце',
+  keys:['сердц','влюб','изменил','изменила','предал','больно','чувств'],
+  situations:[
+    '«Нам нужно поговорить» — и тишина.',
+    '{Сказал|Сказала}: «дело не в тебе».',
+    '{Исчез|Исчезла} без объяснений.',
+    'Через неделю уже с {другой|другим}.',
+    '«Я не {готов|готова} к отношениям» — но не со мной.',
+    '{Обещал|Обещала} познакомить с родителями. Два года.',
+    '{Расстался|Рассталась} сообщением.',
+    '{Сказал|Сказала}, что любит, и {заблокировал|заблокировала}.',
+    '{Держал|Держала} в «может быть» полгода.',
+    '{Выбрал|Выбрала} того, с кем удобнее.',
+    '{Попросил|Попросила} паузу и {ушёл|ушла} совсем.',
+    '{Признался|Призналась} в чувствах и {пропал|пропала}.',
+    '«Ты слишком {хороший|хорошая} для меня».',
+    'Читал{|а} мои сообщения при {ней|нём}.',
+    '{Клялся|Клялась} в верности. Нас было трое.',
+    '{Вернулся|Вернулась} через год как ни в чём не бывало.',
+    '{Забыл|Забыла} про годовщину, помнит про матч.',
+    '{Представлял|Представляла} друзьям как «коллегу».',
+    '{Оставил|Оставила} зубную щётку и надежду.',
+    'Говорит: «мы же не встречались».'
+  ],
+  curses:[
+    'Пусть все твои «нам нужно поговорить» начинает кто-то другой, а ты сидишь и ждёшь продолжения.',
+    'Пусть твой идеальный человек обожает три часа рассказывать про бывших.',
+    'Пусть твой лучший романтический жест совпадёт с чужим днём рождения.',
+    'Пусть длинное честное сообщение уйдёт не в тот чат. Безобидно, но навсегда.',
+    'Пусть «дело не в тебе» скажут тебе. Дважды. Разные люди.',
+    'Пусть ты поймёшь, что {был|была} {неправ|неправа}, ровно на чужой свадьбе.',
+    'Пусть все песни в такси будут ровно про то, что ты {сделал|сделала}.',
+    'Пусть твоя пауза затянется — и её возьмут первыми.',
+    'Пусть совместный плейлист навсегда останется в чужом аккаунте.',
+    'Пусть твоё «я просто {устал|устала}» однажды скажут тебе в ответ.',
+    'Пусть тебе достанется тот, кто отвечает «ок» на длинные сообщения.',
+    'Пусть лучшая твоя фотография окажется сделанной тем, кого ты {бросил|бросила}.'
+  ]
+},
+{
+  id:'betray', emoji:'😤', title:'Подставил',
+  keys:['подстав','свалил','сдал','за спиной','коллег','начальник','виноват','идею'],
+  situations:[
+    '{Свалил|Свалила} свой косяк на меня.',
+    '{Рассказал|Рассказала} по секрету всему отделу.',
+    '{Присвоил|Присвоила} мою идею на планёрке.',
+    '{Обещал|Обещала} прикрыть — {сдал|сдала} первым же.',
+    '«Я тут ни при чём» — при чём.',
+    '{Переслал|Переслала} личную переписку.',
+    '{Сказал|Сказала} начальнику не то, что мне.',
+    '{Записал|Записала} разговор и {показал|показала} другим.',
+    '{Обещал|Обещала} поддержать на встрече и {промолчал|промолчала}.',
+    'Договорились об одном — {сделал|сделала} другое.',
+    '{Взял|Взяла} мой проект и «немного {доработал|доработала}».',
+    'Жалуется на меня тем, кто мне всё пересказывает.',
+    '{Сорвал|Сорвала} сроки и {написал|написала}, что это я.',
+    '{Соврал|Соврала} и {забыл|забыла}, что {соврал|соврала}.',
+    '{Подставил|Подставила} и просит войти в положение.',
+    '{Рассказал|Рассказала} про мою зарплату всему чату.',
+    '{Пришёл|Пришла} с претензией из чужих слов.',
+    '{Ушёл|Ушла} в отпуск, оставив мой дедлайн.',
+    '«Я {думал|думала}, ты в курсе».',
+    'Публично {согласился|согласилась}, приватно {написал|написала} обратное.'
+  ],
+  curses:[
+    'Пусть твоя версия событий войдёт в историю — и все будут пересказывать её неправильно.',
+    'Пусть ты однажды войдёшь в комнату, где все всё знают. И все очень вежливы.',
+    'Пусть «да всё было не так» звучит у тебя сразу после того, как на стол лягут скриншоты.',
+    'Пусть повышение принесёт тебе полную ответственность за то, что ты {придумал|придумала}.',
+    'Пусть все твои «я ни при чём» автоматически сохраняются в облаке. Навсегда.',
+    'Пусть второй раз это получится у тебя с тем, кто читает мелкий шрифт.',
+    'Пусть твоё имя всплывает на планёрках. В контексте.',
+    'Пусть чужая работа под твоим именем принесёт тебе чужие же дедлайны.',
+    'Пусть твоя правда о ситуации доходит до всех в пересказе того, кто там был.',
+    'Пусть в общий чат случайно улетит твоя переписка из личного.',
+    'Пусть подпись попросят поставить именно там, где ты «ни при чём».',
+    'Пусть коллега, которому ты всё {рассказал|рассказала}, окажется очень общительным.'
+  ]
+},
+{
+  id:'neighbor', emoji:'🏠', title:'Сосед',
+  keys:['сосед','перфоратор','сверл','подъезд','этаж','ремонт','шум'],
+  situations:[
+    'Перфоратор в восемь утра в субботу.',
+    'Курит на балконе — дымом ко мне.',
+    'Сигнализация под окнами всю ночь.',
+    'Двигает мебель по ночам.',
+    '{Его|Её} собака лает круглосуточно.',
+    'Топает так, будто дома живёт лошадь.',
+    'Караоке в среду.',
+    'Оставляет мусор у лифта.',
+    'Сверлит ровно в тихий час.',
+    'Паркуется поперёк двора.',
+    'Курит в подъезде и говорит, что это не {он|она}.',
+    'Прогревает машину под окном полчаса.',
+    '{Его|Её} гости звонят в мою дверь.',
+    'Музыка на всю в полночь.',
+    'Жарит рыбу так, что знает весь подъезд.',
+    'Ремонт идёт второй год.',
+    'Роняет что-то тяжёлое каждое утро.',
+    'Ставит велосипед перед моей дверью.',
+    'Кормит голубей на общем балконе.',
+    'Рассказывает всем про мою личную жизнь.'
+  ],
+  curses:[
+    'Пусть твой перфоратор включается сам. В восемь утра. В твоей спальне.',
+    'Пусть сверху поселятся такие же, как ты, только с барабанами.',
+    'Пусть твоя сигнализация срабатывает от ветра. Каждую ночь.',
+    'Пусть запах чужой жареной рыбы находит тебя даже в отпуске.',
+    'Пусть лифт работает всегда, кроме тех дней, когда ты с сумками.',
+    'Пусть твой ремонт закончится на день позже, чем терпение всего подъезда.',
+    'Пусть ровно над тобой поселится тот, кто двигает мебель по ночам.',
+    'Пусть твою музыку в полночь слышат все, кроме тебя.',
+    'Пусть сосед снизу окажется человеком с очень тонким слухом и свободным временем.',
+    'Пусть домофон звонит тебе каждый раз, когда гости приходят не к тебе.',
+    'Пусть пакет, оставленный у лифта, возвращается к твоей двери.',
+    'Пусть стиральная машина ходит по квартире только ночью.'
+  ]
+}
+];
+
+/* --- проклятия по силе (подходят к любой ситуации) --- */
+const BY_POWER = {
+1:[
+ 'Пусть твой телефон показывает один процент именно тогда, когда зарядка осталась дома.',
+ 'Пусть наушники разряжаются ровно на припеве.',
+ 'Пусть тебе всегда достаётся стол, который качается.',
+ 'Пусть носки после стирки возвращаются в нечётном количестве.',
+ 'Пусть провод втыкается только с третьего раза.',
+ 'Пусть ты каждый раз тянешь на себя дверь с надписью «от себя».',
+ 'Пусть чай остывает ровно за минуту до того, как ты до него дойдёшь.',
+ 'Пусть последняя печенька в пачке всегда оказывается сломанной.',
+ 'Пусть интернет ловит везде, кроме того места, где ты обычно сидишь.',
+ 'Пусть будильник звонит за минуту до самого интересного места сна.',
+ 'Пусть тебе всегда достаётся тележка с одним задумчивым колесом.',
+ 'Пусть зубная паста заканчивается ровно в момент выдавливания.',
+ 'Пусть каждый раз, когда ты садишься есть, кто-нибудь звонит.',
+ 'Пусть подушка всегда будет тёплой с обеих сторон.',
+ 'Пусть соседняя очередь двигается быстрее ровно на одного человека.',
+ 'Пусть автозамена исправляет только те слова, которые были написаны правильно.',
+ 'Пусть в лифте всегда горит кнопка этажа прямо перед твоим.',
+ 'Пусть ты вспоминаешь, зачем {зашёл|зашла} в комнату, только выйдя из неё.',
+ 'Пусть пакет с продуктами рвётся ровно у подъезда.',
+ 'Пусть идеальный ответ приходит тебе через три часа после разговора.',
+ 'Пусть носок сползает в обувь ровно посреди дороги.',
+ 'Пусть кофе бодрит всех вокруг, кроме тебя.'
+],
+2:[
+ 'Пусть каждый раз, когда ты говоришь «уже выезжаю», навигатор добавляет сорок минут.',
+ 'Пусть все светофоры переключаются прямо перед тобой и только когда ты опаздываешь.',
+ 'Пусть «перезвоню через пять минут» честно превращается в три рабочих дня.',
+ 'Пусть каждый сериал, который ты полюбишь, закроют после первого сезона.',
+ 'Пусть доставка приезжает ровно в те десять минут, когда ты в душе.',
+ 'Пусть в самый важный момент тебе прилетает видеозвонок от мамы.',
+ 'Пусть все пароли, которые ты помнишь наизусть, окажутся от старой почты.',
+ 'Пусть «последняя серия перед сном» заканчивается в 4:40 утра.',
+ 'Пусть твоё любимое место переедет и станет барбершопом.',
+ 'Пусть все отзывы, которые ты прочитаешь перед покупкой, окажутся правдой. Плохие.',
+ 'Пусть загрузка зависает на 99% ровно тогда, когда осталось две секунды.',
+ 'Пусть каждый раз, когда ты соберёшься в зал, там будет ремонт.',
+ 'Пусть нужный чек всегда оказывается выцветшим до состояния чистого листа.',
+ 'Пусть в каждом такси играет радио, а водитель имеет мнение обо всём.',
+ 'Пусть любая твоя покупка через два дня уходит в скидку на сорок процентов.',
+ 'Пусть твоё место в самолёте окажется между двумя очень общительными людьми.',
+ 'Пусть «сегодня лягу пораньше» заканчивается чтением комментариев 2013 года.',
+ 'Пусть скриншоты уходят не в тот чат. Безобидные, но очень неловкие.',
+ 'Пусть новая белая футболка встречается с кетчупом в первые пять минут.',
+ 'Пусть тебе всегда попадается самая медленная касса.',
+ 'Пусть заряд заканчивается ровно перед важным звонком.',
+ 'Пусть интернет работает идеально весь день и отключается во время созвона.'
+],
+3:[
+ 'Пусть тебя приспичивает в туалет ровно тогда, когда до него очередь из десяти человек.',
+ 'Пусть живот начинает урчать в самой тихой комнате.',
+ 'Пусть зуд появляется ровно там, где невозможно почесать.',
+ 'Пусть туалетная бумага заканчивается в самый неподходящий момент.',
+ 'Пусть икота приходит на важной встрече и остаётся надолго.',
+ 'Пусть чихание начинается ровно тогда, когда ты пытаешься выглядеть серьёзно.',
+ 'Пусть ты всегда садишься на мокрое место и узнаёшь об этом слишком поздно.',
+ 'Пусть волос попадается в самой вкусной еде.',
+ 'Пусть каждый раз, когда ты спешишь, туалет оказывается на другом конце здания.',
+ 'Пусть будильник звонит во сне и молчит, когда реально пора вставать.',
+ 'Пусть ты найдёшь идеальное место для парковки сразу после того, как припаркуешься за три квартала.',
+ 'Пусть человек твоей мечты встретится тебе в день, когда ты {вышел|вышла} выносить мусор.',
+ 'Пусть гениальная мысль приходит за секунду до сна и исчезает к утру.',
+ 'Пусть шкаф соберётся с первого раза, а лишняя деталь останется важной.',
+ 'Пусть ты похудеешь на три килограмма ровно в тот день, когда все скажут «ты что-то {поправился|поправилась}».',
+ 'Пусть отпуск мечты совпадёт с ремонтом набережной.',
+ 'Пусть ты станешь тем, кто случайно отправляет в общий чат голосовое. На две минуты. С фоном.',
+ 'Пусть твою лучшую идею повторит тот, кто скажет её громче.',
+ 'Пусть ты дочитаешь книгу и поймёшь, что последние тридцать страниц уже {читал|читала}.',
+ 'Пусть ты накопишь на мечту — и через неделю выйдет новая версия.',
+ 'Пусть ты однажды придёшь вовремя и узнаешь, что встречу перенесли ещё вчера.',
+ 'Пусть все, кого ты когда-либо {проигнорировал|проигнорировала}, одновременно лайкнут твоё фото 2014 года.',
+ 'Пусть желудок реагирует на стресс раньше, чем ты успеваешь выйти из дома.',
+ 'Пусть самый громкий звук в тихой комнате издаёт твой стул.'
+]
+};
+
+/* --- если человек описал ситуацию своими словами --- */
+const CUSTOM = [
+ 'Пусть «{S}» однажды повторится с тобой. В том же объёме и без объяснений.',
+ 'Пусть за «{S}» вселенная выставит счёт мелкими бытовыми неудобствами.',
+ 'Пусть каждый раз, когда ты вспоминаешь, как «{S}», у тебя зависает телефон.',
+ 'Пусть «{S}» станет твоей личной приметой: сделал — день не задался.',
+ 'Пусть тебе трижды приснится «{S}» — и каждый раз с чужим разочарованным лицом.',
+ 'Пусть история про то, как «{S}», дойдёт до того, кому ты меньше всего {хотел|хотела} её рассказывать.'
+];
+
+const POWERS = {1:{emoji:'😇',name:'Лёгкое'},2:{emoji:'😈',name:'Жёсткое'},3:{emoji:'☠️',name:'Без пощады'}};
+const RITUAL_WORDS = ['СОЗЫВАЕМ ДРЕВНИЕ СИЛЫ','СВЕРЯЕМ КАРМИЧЕСКИЙ БАЛАНС','ПОДБИРАЕМ ФОРМУЛИРОВКУ','ЗАВЕРЯЕМ У ВСЕЛЕННОЙ','ВЫЧИСЛЯЕМ МЕРУ НАКАЗАНИЯ'];
+
+/* ---------- утилиты ---------- */
+const $ = s => document.querySelector(s);
+const rnd = a => a[Math.floor(Math.random()*a.length)];
+const byId = id => CATEGORIES.find(c => c.id === id);
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+/* {мужская|женская} форма */
+function fill(str, gender){
+  return str.replace(/\{([^{}|]*)\|([^{}]*)\}/g, (m,a,b) => gender === 'f' ? b : a);
+}
+
+const MALE_EXC = ['никита','илья','лёша','саша','женя','валера','дима','данила','гоша','кузьма','лука','фома','паша','миша','слава','лёва','серёжа','юра'];
+function detectGender(name, text){
+  const t = (text||'').toLowerCase();
+  if(/(бывшая|она |подруга|клиентка|начальница|сестра|жена|девушка|тёща|написала|сказала|сделала|обещала|подрезала|разбила|подставила|заняла|ушла|бросила|пропала|исчезла)/.test(t)) return 'f';
+  if(/(бывший|он |друг|клиент|начальник|брат|муж|парень|написал |сказал |сделал |обещал |подрезал|разбил|подставил|занял |ушёл|бросил|пропал |исчез )/.test(t)) return 'm';
+  const n = (name||'').trim().toLowerCase();
+  if(!n) return 'm';
+  if(MALE_EXC.includes(n)) return 'm';
+  if(/(а|я)$/.test(n)) return 'f';
+  return 'm';
+}
+
+function detectCategory(text){
+  const t = (text||'').toLowerCase();
+  if(!t.trim()) return null;
+  let best = null, score = 0;
+  for(const c of CATEGORIES){
+    let s = 0;
+    for(const k of c.keys) if(t.includes(k)) s += k.length;
+    if(s > score){ score = s; best = c; }
+  }
+  return best;
+}
+
+/* ---------- выбор без повторов ---------- */
+const used = new Set();                 // проклятия за сессию
+function pickCurse(pool){
+  const free = pool.filter(l => !used.has(l));
+  if(!free.length){ pool.forEach(l => used.delete(l)); return pickCurse(pool); }
+  const line = rnd(free);
+  used.add(line);
+  return line;
+}
+const lastSituation = {};               // последняя показанная ситуация по категории
+function pickSituation(cat){
+  const free = cat.situations.filter(s => s !== lastSituation[cat.id]);
+  const s = rnd(free);
+  lastSituation[cat.id] = s;
+  return s;
+}
+
+/* ---------- имя внутри фразы ---------- */
+function weave(line, name){
+  if(!name) return line;
+  const n = name.trim();
+  const starts = line.startsWith('Пусть ');
+  const variants = [];
+  if(starts) variants.push(() => n + ', пусть ' + line.slice(6));
+  if(/ ты /.test(line)) variants.push(() => line.replace(' ты ', ' ты, ' + n + ', '));
+  variants.push(() => line.replace(/\.$/, ', ' + n + '.'));
+  return rnd(variants)();
+}
+
+/* ---------- сборка ---------- */
+function shortText(t){
+  let s = (t||'').trim().replace(/\s+/g,' ').replace(/[.!?]+$/,'');
+  if(s.length > 80) s = s.slice(0,78).replace(/\s\S*$/,'') + '…';
+  return s.charAt(0).toLowerCase() + s.slice(1);
+}
+function generate(opts){
+  const {name, text, power, catId} = opts;
+  const custom = (text||'').trim();
+  const cat = catId ? byId(catId) : detectCategory(custom);
+  const gender = detectGender(name, custom + ' ' + (cat ? fill(cat.title,'m') : ''));
+  const display = (name||'').trim();
+
+  // чем сильнее проклятие, тем чаще берём «бытовой» пул выбранной силы
+  const catChance = [0.75, 0.75, 0.6][power-1];
+  let line;
+  if(cat && Math.random() < catChance){
+    line = pickCurse(cat.curses);
+  }else if(!cat && custom && Math.random() < 0.5){
+    line = pickCurse(CUSTOM).replace('{S}', shortText(custom));
+  }else{
+    line = pickCurse(BY_POWER[power]);
+  }
+
+  line = fill(weave(line, display), gender);
+
+  return {
+    victim: display ? display.toUpperCase() : 'СЛУЧАЙНАЯ ЖЕРТВА',
+    text: line,
+    power,
+    catLabel: cat ? fill(cat.title, gender) : (custom ? shortText(custom) : 'Случайное'),
+    catEmoji: cat ? cat.emoji : '🎲',
+    ts: Date.now()
+  };
+}
+
+/* ---------- состояние ---------- */
+let currentCat = null, current = null, lastOpts = null, busy = false;
+const HKEY = 'proklinator_history_v1';
+
+/* ---------- чипы категорий ---------- */
+const chipsBox = $('#chips'), sitInput = $('#sitInput'), nameInput = $('#nameInput');
+CATEGORIES.forEach(c=>{
+  const b = document.createElement('button');
+  b.className = 'chip'; b.dataset.id = c.id;
+  b.textContent = c.emoji + ' ' + fill(c.title,'m');
+  b.onclick = () => chooseCategory(c.id);
+  chipsBox.appendChild(b);
+});
+const diceChip = document.createElement('button');
+diceChip.className = 'chip dice';
+diceChip.textContent = '🎲 Случайное';
+diceChip.onclick = () => chooseCategory(rnd(CATEGORIES).id);
+chipsBox.appendChild(diceChip);
+
+function chooseCategory(id){
+  currentCat = id;
+  const cat = byId(id);
+  [...chipsBox.children].forEach(el => el.classList.toggle('on', el.dataset.id === id));
+  sitInput.value = fill(pickSituation(cat), detectGender(nameInput.value, ''));
+  sitInput.classList.add('flash');
+  setTimeout(()=>sitInput.classList.remove('flash'), 450);
+}
+sitInput.addEventListener('input', () => {   // написал своими словами — категория больше не навязывается
+  if(currentCat){ currentCat = null; [...chipsBox.children].forEach(el => el.classList.remove('on')); }
+});
+
+/* ---------- имя ---------- */
+const victimPreview = $('#victimPreview');
+nameInput.addEventListener('input', () => {
+  const v = nameInput.value.trim();
+  victimPreview.textContent = v;
+  victimPreview.classList.toggle('on', v.length > 0);
+});
+
+/* ---------- сила ---------- */
+const power = $('#power'), ticks = [...$('#ticks').children];
+power.addEventListener('input', () => {
+  const v = +power.value;
+  ticks.forEach((t,i) => t.classList.toggle('on', i === v-1));
+  $('#powerName').textContent = POWERS[v].emoji + ' ' + POWERS[v].name;
+});
+
+/* ---------- ритуал ---------- */
+const runeChars = ['✦','☾','✧','⚝','◈','☽','✶','⟁','✵','◇','✸','⋆'];
+const runesG = $('#runes');
+runeChars.forEach((ch,i)=>{
+  const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+  const a = (i/runeChars.length)*2*Math.PI;
+  t.setAttribute('x', (100 + 78*Math.sin(a)).toFixed(1));
+  t.setAttribute('y', (100 - 78*Math.cos(a)).toFixed(1));
+  t.setAttribute('text-anchor','middle'); t.setAttribute('dominant-baseline','middle');
+  t.setAttribute('fill','#d9b872'); t.setAttribute('fill-opacity','.7'); t.setAttribute('font-size','11');
+  t.textContent = ch;
+  runesG.appendChild(t);
+});
+
+function cast(opts){
+  if(busy) return;
+  busy = true;
+  $('#ritualWord').textContent = rnd(RITUAL_WORDS);
+  const r = $('#ritual');
+  r.classList.add('on');
+  const res = generate(opts);
+  setTimeout(()=>{
+    r.classList.remove('on');
+    showResult(res);
+    saveHistory(res);
+    busy = false;
+  }, 1400);
+}
+
+function showResult(res){
+  current = res;
+  $('#resVictim').textContent = res.victim;
+  const box = $('#resText');
+  box.textContent = res.text || (res.lines ? res.lines.join(' ') : '');
+  box.style.animation = 'none'; void box.offsetWidth; box.style.animation = '';
+  $('#resMeta').innerHTML =
+    '<span class="tag">' + (res.catEmoji || res.sitEmoji || '🎲') + ' ' + esc(res.catLabel || res.sitLabel || '') + '</span>' +
+    '<span class="tag">' + POWERS[res.power].emoji + ' ' + POWERS[res.power].name + '</span>';
+  $('#viewMain').classList.remove('on');
+  $('#viewResult').classList.add('on');
+  window.scrollTo(0,0);
+  prepareCard(res);
+}
+
+function currentOpts(){
+  return {name:nameInput.value.trim(), text:sitInput.value.trim(), power:+power.value, catId:currentCat};
+}
+$('#castBtn').onclick = () => { lastOpts = currentOpts(); cast(lastOpts); };
+$('#againBtn').onclick = () => cast(lastOpts || currentOpts());
+$('#randomBtn').onclick = () => { lastOpts = {name:nameInput.value.trim(), text:'', power:+power.value, catId:null}; cast(lastOpts); };
+$('#backBtn').onclick = () => {
+  $('#viewResult').classList.remove('on');
+  $('#viewMain').classList.add('on');
+  window.scrollTo(0,0);
+};
+
+/* ---------- копирование ---------- */
+function plainText(res){
+  return '🔮 ' + res.victim + '\n\n' + (res.text || '') + '\n\n— ПРОКЛИНАТОР';
+}
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('on');
+  clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove('on'), 2100);
+}
+async function copyText(txt){
+  try{ await navigator.clipboard.writeText(txt); }
+  catch(e){
+    const ta = document.createElement('textarea');
+    ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(_){}
+    ta.remove();
+  }
+  toast('📋 Скопировано');
+}
+$('#copyBtn').onclick = () => copyText(plainText(current));
+$('#copyBtn2').onclick = () => copyText(plainText(shareRes));
+
+/* ---------- карточка 9:16 ---------- */
+let shareRes = null;
+const cv = $('#shareCanvas');
+function wrapLines(ctx, text, maxW){
+  const words = text.split(' ');
+  const out = []; let line = '';
+  for(const w of words){
+    const test = line ? line + ' ' + w : w;
+    if(ctx.measureText(test).width > maxW && line){ out.push(line); line = w; }
+    else line = test;
+  }
+  if(line) out.push(line);
+  return out;
+}
+function sp(str, px){ return str.split('').join(String.fromCharCode(8202).repeat(Math.max(1,Math.round(px/3)))); }
+
+function drawCard(res){
+  shareRes = res;
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  const g = ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#140d12'); g.addColorStop(.5,'#0b0809'); g.addColorStop(1,'#0f0a14');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  let rg = ctx.createRadialGradient(W*.5,H*.42,0,W*.5,H*.42,W*.95);
+  rg.addColorStop(0,'rgba(109,18,48,.6)'); rg.addColorStop(1,'rgba(109,18,48,0)');
+  ctx.fillStyle = rg; ctx.fillRect(0,0,W,H);
+  rg = ctx.createRadialGradient(W*.18,H*.85,0,W*.18,H*.85,W*.8);
+  rg.addColorStop(0,'rgba(59,28,94,.5)'); rg.addColorStop(1,'rgba(59,28,94,0)');
+  ctx.fillStyle = rg; ctx.fillRect(0,0,W,H);
+
+  ctx.strokeStyle = 'rgba(217,184,114,.4)'; ctx.lineWidth = 2;
+  ctx.strokeRect(54,54,W-108,H-108);
+  ctx.textAlign = 'center';
+
+  // шапка
+  ctx.font = '86px "Segoe UI Emoji","Apple Color Emoji",sans-serif';
+  ctx.fillText('🔮', W/2, 290);
+  ctx.fillStyle = '#d9b872';
+  ctx.font = '800 38px Unbounded, Manrope, sans-serif';
+  ctx.fillText(sp('ПРОКЛИНАТОР', 7), W/2, 380);
+
+  // имя
+  ctx.fillStyle = '#fff6e8';
+  let vs = 104;
+  ctx.font = '800 ' + vs + 'px Unbounded, Manrope, sans-serif';
+  while(ctx.measureText(res.victim).width > W-190 && vs > 34){ vs -= 4; ctx.font = '800 ' + vs + 'px Unbounded, Manrope, sans-serif'; }
+  ctx.fillText(res.victim, W/2, 600);
+
+  ctx.strokeStyle = 'rgba(217,184,114,.35)'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(W*.3,680); ctx.lineTo(W*.7,680); ctx.stroke();
+
+  // проклятие — главный элемент, вписываем в 760…1440 и центрируем
+  const TOP = 760, BOX = 680;
+  const full = res.text || (res.lines ? res.lines.join(' ') : '');
+  let fs = 78, lines, h;
+  while(true){
+    ctx.font = 'italic 500 ' + fs + 'px "Playfair Display", Georgia, serif';
+    lines = wrapLines(ctx, full, W - 200);
+    h = lines.length * fs * 1.4;
+    if(h <= BOX || fs <= 30) break;
+    fs -= 2;
+  }
+  ctx.fillStyle = '#f7f1e7';
+  let y = TOP + (BOX - h)/2 + fs;
+  for(const l of lines){ ctx.fillText(l, W/2, y); y += fs*1.4; }
+
+  // подпись
+  ctx.fillStyle = '#d9b872';
+  ctx.font = '800 34px Manrope, sans-serif';
+  ctx.fillText(sp('ПРОКЛЯТИЕ АКТИВИРОВАНО', 6), W/2, 1590);
+  ctx.fillStyle = '#6d635b';
+  ctx.font = '500 30px Manrope, sans-serif';
+  ctx.fillText('proklinator', W/2, H-150);
+}
+
+function cardBlob(){
+  return new Promise(r => cv.toBlob(r, 'image/png'));
+}
+function cardName(res){
+  return 'проклятие-' + (res.victim.toLowerCase().replace(/[^\wа-яё]+/gi,'-')) + '.png';
+}
+
+/* карточку готовим заранее, пока читают проклятие:
+   так «Отправить» срабатывает сразу и системное меню вызывается прямо из касания */
+let cardCache = {res:null, blob:null};
+function prepareCard(res){
+  drawCard(res);
+  cardBlob().then(b => { cardCache = {res:res, blob:b}; });
+}
+
+/* главный сценарий: картинка → системное меню «Поделиться» */
+async function shareCard(res){
+  let blob = (cardCache.res === res) ? cardCache.blob : null;
+  if(!blob){ drawCard(res); blob = await cardBlob(); }
+  const file = new File([blob], 'proklinator.png', {type:'image/png'});
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+    try{
+      await navigator.share({files:[file], text:(res.text || '') + '\n\n🔮 ПРОКЛИНАТОР'});
+      return;
+    }catch(e){
+      if(e && e.name === 'AbortError') return;   // просто закрыли меню
+    }
+  }
+  openShare(res);   // системного меню нет — показываем карточку с кнопками
+}
+function openShare(res){
+  drawCard(res);
+  $('#shareModal').classList.add('on');
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ if(shareRes===res) drawCard(res); });
+}
+$('#shareBtn').onclick = () => shareCard(current);
+$('#sendBtn').onclick = async () => {
+  const blob = await cardBlob();
+  const file = new File([blob], 'proklinator.png', {type:'image/png'});
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+    try{ await navigator.share({files:[file], text:(shareRes.text || '') + '\n\n🔮 ПРОКЛИНАТОР'}); }
+    catch(e){}
+  }else if(navigator.share){
+    try{ await navigator.share({title:'ПРОКЛИНАТОР', text:plainText(shareRes)}); }catch(e){}
+  }else{
+    copyText(plainText(shareRes));
+    toast('Здесь нет меню «Поделиться» — текст скопирован, картинку сохраните кнопкой «Скачать»');
+  }
+};
+$('#dlBtn').onclick = async () => {
+  const blob = await cardBlob();
+  const filename = cardName(shareRes);
+  // в опубликованной версии файл отдаётся через платформу, в локальной — обычной ссылкой
+  const dl = (window.claude && window.claude.use) ? await window.claude.use('downloads') : null;
+  if(dl){
+    try{ await dl.save({filename, data:blob}); toast('📥 Карточка сохранена'); }
+    catch(e){ if(!e || e.code !== 'declined') toast('Не получилось сохранить'); }
+    return;
+  }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+  toast('📥 Карточка сохранена');
+};
+
+/* ---------- история ---------- */
+function loadHistory(){ try{ return JSON.parse(localStorage.getItem(HKEY)) || []; }catch(e){ return []; } }
+function saveHistory(res){
+  const h = loadHistory();
+  h.unshift(res);
+  try{ localStorage.setItem(HKEY, JSON.stringify(h.slice(0,40))); }catch(e){}
+}
+function fmtDate(ts){
+  const d = new Date(ts);
+  return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'short'}) + ', ' +
+         d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+}
+function renderHistory(){
+  const h = loadHistory(), box = $('#histList');
+  if(!h.length){ box.innerHTML = '<div class="empty">Пока никого.<br>Самое время это исправить.</div>'; return; }
+  box.innerHTML = h.map((r,i)=>
+    '<div class="hist-item" data-i="' + i + '">' +
+      '<div class="hist-name">' + esc(r.victim) + '</div>' +
+      '<div class="hist-row">' +
+        '<span class="tag">' + (r.catEmoji || r.sitEmoji || '🎲') + ' ' + esc(r.catLabel || r.sitLabel || '') + '</span>' +
+        '<span class="tag">🔮 Жёсткость: ' + POWERS[r.power].emoji + '</span>' +
+        '<span class="hist-date">' + fmtDate(r.ts) + '</span>' +
+      '</div></div>').join('');
+  [...box.children].forEach(el=>{
+    el.onclick = () => {
+      $('#histModal').classList.remove('on');
+      showResult(loadHistory()[+el.dataset.i]);
+    };
+  });
+}
+$('#histBtn').onclick = () => { renderHistory(); $('#histModal').classList.add('on'); };
+$('#clearHist').onclick = () => {
+  if(!loadHistory().length){ toast('Уже пусто'); return; }
+  if(confirm('Удалить всю историю проклятий?')){
+    localStorage.removeItem(HKEY); renderHistory(); toast('🗑 История очищена');
+  }
+};
+document.querySelectorAll('[data-close]').forEach(b=> b.onclick = () => $('#'+b.dataset.close).classList.remove('on'));
+document.querySelectorAll('.modal').forEach(m=> m.addEventListener('click', e=>{ if(e.target===m) m.classList.remove('on'); }));
+
+/* ---------- проклятие дня ---------- */
+function dailyCurse(){
+  const d = new Date();
+  const seed = d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate();
+  const r = mulberry32(seed);
+  const pool = BY_POWER[1 + Math.floor(r()*3)];
+  const line = fill(pool[Math.floor(r()*pool.length)], 'm');
+  return {victim:'ПРОКЛЯТИЕ ДНЯ', text:line, power:2, catLabel:'Проклятие дня', catEmoji:'🔮', ts:Date.now()};
+}
+const daily = dailyCurse();
+$('#dailyText').textContent = daily.text;
+$('#dailyDate').textContent = new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'long'}).toUpperCase();
+$('#dailyShare').onclick = () => shareCard(daily);
+
+power.dispatchEvent(new Event('input'));
+</script>
+</body>
+</html>
